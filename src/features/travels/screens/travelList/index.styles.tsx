@@ -71,10 +71,21 @@ export const TextInfosWrapper = styled(View)`
   padding-left: 30px;
 `;
 
-export const NavigationWrapper = styled(TouchableOpacity)`
-`;
+export const NavigationWrapper = styled(TouchableOpacity)``;
 
 export const IconWrapper = styled(TouchableOpacity)`
-justify-content: center;
-padding: 20px;
+  justify-content: center;
+  padding: 20px;
+`;
+
+export const DeleteButton = styled(TouchableOpacity)`
+  background-color: red;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+`;
+
+export const DeleteButtonText = styled.Text`
+  color: white;
+  font-weight: bold;
 `;
