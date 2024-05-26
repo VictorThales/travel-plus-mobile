@@ -9,6 +9,7 @@ import {Profile} from '../features/profile/screens/Profile';
 import {Travels} from '../features/travels/screens/travelList/';
 import {useNavigation} from '@react-navigation/native';
 import {AddTravel} from '../features/travels/screens/travel/addTravel';
+import {Login} from '../features/profile/screens/Login';
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +69,8 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Perfil"
-        component={Profile}
+        //component={Profile} //logged
+        component={Login}
         options={{
           ...headerStyle,
           tabBarLabel: 'Perfil',

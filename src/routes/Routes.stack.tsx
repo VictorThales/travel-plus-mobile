@@ -10,6 +10,11 @@ import {AddDestination} from '../features/travels/screens/destination/addDestina
 import {AddCompanion} from '../features/travels/screens/companion/addCompanion';
 import {AddPlace} from '../features/travels/screens/place/addPlace';
 import {AddTravel} from '../features/travels/screens/travel/addTravel';
+import {Statistics} from '../features/profile/screens/Statistics';
+import {Register} from '../features/profile/screens/Register';
+import {UpdatePassword} from '../features/profile/screens/UpdatePassword';
+import {ForgetPassword} from '../features/profile/screens/ForgetPassword';
+import {Login} from '../features/profile/screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -98,6 +103,56 @@ export function RoutesStack() {
         }}
         name="AddTravel"
         component={AddTravel}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Estatísticas',
+          ...headerStyle,
+          headerShown: true,
+          headerBackTitle: '',
+        }}
+        name="Statistics"
+        component={Statistics}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Cadastro',
+          ...headerStyle,
+          headerShown: true,
+          headerBackTitle: '',
+        }}
+        name="Register"
+        component={Register}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Alterar senha',
+          ...headerStyle,
+          headerShown: true,
+          headerBackTitle: '',
+        }}
+        name="UpdatePassword"
+        component={UpdatePassword}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Recuperar Senha',
+          ...headerStyle,
+          headerShown: true,
+          headerBackTitle: '',
+        }}
+        name="ForgetPassword"
+        component={ForgetPassword}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: 'Login',
+          ...headerStyle,
+          headerShown: true,
+          headerBackTitle: '',
+        }}
+        name="Login"
+        component={Login}
       />
     </Stack.Navigator>
   );

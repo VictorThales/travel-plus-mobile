@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {Text, View, TouchableOpacity, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 
 export const Wrapper = styled(View)<{paddingTop?: number}>`
@@ -7,20 +7,7 @@ export const Wrapper = styled(View)<{paddingTop?: number}>`
   padding-left: 20px;
   padding-right: 20px;
 `;
-export const IconWrapper = styled(TouchableOpacity)`
-  justify-content: center;
-  padding-left: 0px;
-`;
-export const ImageButton = styled(TouchableOpacity)`
-  margin-top: 12px;
-  padding-left: 10px;
-`;
 
-export const StyledImage = styled(Image)`
-  width: 133px;
-  height: 133px;
-  border-radius: 99px;
-`;
 export const Section = styled.View`
   margin-top: 12px;
 `;
