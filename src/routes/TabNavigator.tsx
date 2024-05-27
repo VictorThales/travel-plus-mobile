@@ -7,14 +7,15 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Profile} from '../features/profile/screens/Profile';
 import {Travels} from '../features/travels/screens/travelList/';
-import {useNavigation} from '@react-navigation/native';
 import {AddTravel} from '../features/travels/screens/travel/addTravel';
 import {Login} from '../features/profile/screens/Login';
+import {useAuthStore} from '../stores/useAuthStore';
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const navigation = useNavigation();
+  const user = useAuthStore(state => state.user);
+
   const headerStyle: BottomTabNavigationOptions = {
     headerTitle: 'Viagem+',
     headerTitleStyle: {fontSize: 25, fontWeight: 'bold'},
@@ -67,10 +68,10 @@ export const TabNavigator = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Perfil"
-        //component={Profile} //logged
-        component={Login}
+        component={!user?.id ? Login : Profile}
         options={{
           ...headerStyle,
           tabBarLabel: 'Perfil',

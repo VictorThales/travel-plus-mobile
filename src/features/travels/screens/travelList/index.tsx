@@ -4,6 +4,7 @@ import * as S from './index.styles';
 import {useNavigation} from '@react-navigation/native';
 import {Swipeable} from 'react-native-gesture-handler';
 import {Alert} from 'react-native';
+import {useAuthStore} from '../../../../stores/useAuthStore';
 
 interface buttonInterface {
   id: number;
@@ -43,6 +44,7 @@ export function Travels() {
   const navigation = useNavigation();
   const [list, setList] = useState<buttonInterface[]>(LinksData);
   const swipeableRef = useRef(null);
+  const user = useAuthStore(state => state.user);
 
   const LinkContent = () => {
     return list.map((item, index) => (
@@ -85,7 +87,15 @@ export function Travels() {
 
   return (
     <S.Wrapper paddingTop={30}>
-      <S.ProfileLinksWrapper>{LinkContent()}</S.ProfileLinksWrapper>
+      {user ? (
+        <S.ProfileLinksWrapper>{LinkContent()}</S.ProfileLinksWrapper>
+      ) : (
+        <S.TextNoLoggedWrapper>
+          <S.TextNoLogged>
+            Faça o login para visualizar suas viagens
+          </S.TextNoLogged>
+        </S.TextNoLoggedWrapper>
+      )}
     </S.Wrapper>
   );
 }

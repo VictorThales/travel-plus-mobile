@@ -6,15 +6,15 @@
  */
 
 import React from 'react';
-import { NavigationComponent } from './routes/NavigationComponent';
-
-
+import {NavigationComponent} from './routes/NavigationComponent';
+import {AuthProvider} from './context/authContext';
 
 function App() {
-  return(
-    <NavigationComponent/>
-  )
+  return (
+    <AuthProvider>
+      <NavigationComponent />
+    </AuthProvider>
+  );
 }
- 
 
 export default App;

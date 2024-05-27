@@ -45,6 +45,7 @@ export const AddButton = styled(TouchableOpacity)`
   border-radius: 48px;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
 export const AddButtonText = styled(Text)`

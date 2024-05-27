@@ -89,3 +89,9 @@ export const DeleteButtonText = styled.Text`
   color: white;
   font-weight: bold;
 `;
+
+export const TextNoLogged = styled.Text``;
+export const TextNoLoggedWrapper = styled.View`
+  align-items: center;
+  margin-top: 62px;
+`;

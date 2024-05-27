@@ -2,8 +2,20 @@ import * as React from 'react';
 
 import * as S from './index.styles';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../../../../context/authContext';
 
 export function Login() {
+  const {login} = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const onChangeEmail = (text: string) => {
+    setEmail(text);
+  };
+  const onChangePassword = (text: string) => {
+    setPassword(text);
+  };
+
   const navigation = useNavigation();
   return (
     <S.Wrapper>
@@ -13,11 +25,18 @@ export function Login() {
 
       <S.Section>
         <S.Label>Email:</S.Label>
-        <S.StyledTextInput placeholder="Email" />
+        <S.StyledTextInput
+          onChangeText={text => onChangeEmail(text)}
+          placeholder="Email"
+        />
       </S.Section>
       <S.Section>
         <S.Label>Senha:</S.Label>
-        <S.StyledTextInput secureTextEntry={true} placeholder="Senha" />
+        <S.StyledTextInput
+          onChangeText={text => onChangePassword(text)}
+          secureTextEntry={true}
+          placeholder="Senha"
+        />
       </S.Section>
       <S.Section>
         <S.Label onPress={() => navigation.navigate('ForgetPassword')}>
@@ -25,7 +44,7 @@ export function Login() {
         </S.Label>
       </S.Section>
       <S.CenteredView>
-        <S.AddButton disabled={true}>
+        <S.AddButton onPress={() => login(email, password)}>
           <S.AddButtonText>Entrar</S.AddButtonText>
         </S.AddButton>
         <S.Section>
