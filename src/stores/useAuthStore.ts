@@ -5,7 +5,7 @@ interface User {
   name: string;
   email: string;
   country: string;
-  city: String;
+  city: string;
   password: String;
 }
 

@@ -6,11 +6,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../../../context/authContext';
+import {useAuthStore} from '../../../../stores/useAuthStore';
 
 export function Profile() {
   const [imageSelected, setSelectedImage] = React.useState('');
   const navigation = useNavigation();
   const {logout} = React.useContext(AuthContext);
+  const user = useAuthStore(state => state.user);
+  const [userInfo, setUserInfo] = React.useState(user);
 
   const openImagePicker = () => {
     const options = {
@@ -62,23 +65,20 @@ export function Profile() {
         </S.IconWrapper>
         <S.Section>
           <S.Label>Nome:</S.Label>
-          <S.StyledTextInput placeholder="Nome" />
+          <S.StyledTextInput placeholder="Nome" value={userInfo?.name} />
         </S.Section>
         <S.Section>
           <S.Label>Email:</S.Label>
-          <S.StyledTextInput placeholder="Email" />
-        </S.Section>
-        <S.Section>
-          <S.Label>Idade:</S.Label>
-          <S.StyledTextInput placeholder="Idade" />
+          <S.StyledTextInput placeholder="Email" value={userInfo?.email} />
         </S.Section>
         <S.Section>
           <S.Label>País:</S.Label>
-          <S.StyledTextInput placeholder="País" />
+          <S.StyledTextInput placeholder="País" value={userInfo?.country} />
         </S.Section>
+
         <S.Section>
           <S.Label>Cidade:</S.Label>
-          <S.StyledTextInput placeholder="Cidade" />
+          <S.StyledTextInput placeholder="Cidade" value={userInfo?.city} />
         </S.Section>
         <S.CenteredView>
           <S.AddButton disabled={true}>

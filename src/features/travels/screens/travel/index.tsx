@@ -2,75 +2,104 @@ import * as React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as S from './index.styles';
 import {FlatList, Image, ScrollView, Text, TextInput, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {
+  IDestination,
+  getDestinationsByTripId,
+} from '../../../../api/travel/destination';
+import {getImage} from '../../../../api/image';
+import {
+  ICompanion,
+  getCompanionsByTripId,
+} from '../../../../api/travel/companion';
+import {IPlace, getPlacesByTripId} from '../../../../api/travel/places';
+interface IDestinationWithUri extends IDestination {
+  uri?: string;
+}
+interface ICompanionWithUri extends ICompanion {
+  uri?: string;
+}
+
+interface IPlaceWithUri extends IPlace {
+  uri?: string;
+}
 
 export function Travel() {
   const navigation = useNavigation();
-  const destinationData = [
-    {
-      title: 'parque da nações',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-    {
-      title: 'parque da nações',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-    {
-      title: 'parque da nações',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-  ];
+  const route = useRoute();
+  const [destinationData, setDestinationData] =
+    React.useState<IDestinationWithUri[]>();
+  const [companionData, setCompanionData] =
+    React.useState<ICompanionWithUri[]>();
+  const [placeData, setPlaceData] = React.useState<IPlaceWithUri[]>();
 
-  const placeData = [
-    {
-      title: 'Restaurante',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-    {
-      title: 'Restaurante',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-    {
-      title: 'Restaurante',
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      date: '10/05/2024',
-      spent: 'R$ 170,00',
-    },
-  ];
+  const {travelId} = route.params as any;
 
-  const companionData = [
-    {
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      name: 'Marcos',
-    },
-    {
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      name: 'Pedro',
-    },
-    {
-      image:
-        'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-      name: 'Thiago',
-    },
-  ];
+  const getDestinations = async () => {
+    const data = await getDestinationsByTripId(travelId);
+
+    const newData: IDestinationWithUri[] = [];
+
+    data.map(async item => {
+      const image = await fetchImage(item.imageId);
+      console.log({image});
+      newData.push({...item, uri: image ? image : ''});
+    });
+    console.log({newData});
+    setDestinationData(newData);
+  };
+
+  const getCompanions = async () => {
+    const data = await getCompanionsByTripId(travelId);
+    console.log({data});
+    const newData: ICompanionWithUri[] = [];
+
+    data.map(async item => {
+      const image = await fetchImage(item.imageId);
+      newData.push({...item, uri: image ? image : ''});
+    });
+    setCompanionData(newData);
+  };
+
+  const getPlaces = async () => {
+    const data = await getPlacesByTripId(travelId);
+    console.log({data});
+    const newData: IPlaceWithUri[] = [];
+
+    data.map(async item => {
+      const image = await fetchImage(item.imageId);
+      newData.push({...item, uri: image ? image : ''});
+    });
+    setPlaceData(newData);
+  };
+
+  const fetchImage = async (imageId: number) => {
+    try {
+      console.log({imageId});
+      const blob = await getImage(imageId);
+      console.log({blob});
+      const uri = URL.createObjectURL(blob);
+      return uri;
+    } catch (error) {
+      console.error('Erro ao carregar imagem:', error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getDestinations();
+      getCompanions();
+      getPlaces();
+    }, []),
+  );
+
+  React.useEffect(() => {
+    getDestinations();
+    getCompanions();
+    getPlaces();
+  }, []);
 
   return (
     <S.Wrapper paddingTop={30}>
@@ -89,7 +118,9 @@ export function Travel() {
           <S.SectionHeader>
             Destinos:
             <S.IconWrapper
-              onPress={() => navigation.navigate('AddDestination')}>
+              onPress={() =>
+                navigation.navigate('AddDestination', {travelId: travelId})
+              }>
               <Icon name="plus-circle" size={15} color="black" />
             </S.IconWrapper>
           </S.SectionHeader>
@@ -102,10 +133,12 @@ export function Travel() {
             data={destinationData}
             renderItem={({item}) => (
               <S.ListItemContainer>
-                <S.SectionHeader>{item.title}</S.SectionHeader>
-                <S.ListItemImage source={{uri: item.image}} />
-                <S.SectionHeader>Data: {item.date}</S.SectionHeader>
-                <S.SectionHeader>Gasto Est.: {item.spent}</S.SectionHeader>
+                <S.SectionHeader>{item.name}</S.SectionHeader>
+                <S.ListItemImage source={{uri: item.uri}} />
+                <S.SectionHeader>Data: {String(item.date)}</S.SectionHeader>
+                <S.SectionHeader>
+                  Gasto Est.: {item.estimatedCost}
+                </S.SectionHeader>
               </S.ListItemContainer>
             )}
           />
@@ -114,7 +147,10 @@ export function Travel() {
         <S.Section>
           <S.SectionHeader>
             Acompanhantes:
-            <S.IconWrapper onPress={() => navigation.navigate('AddCompanion')}>
+            <S.IconWrapper
+              onPress={() =>
+                navigation.navigate('AddCompanion', {travelId: travelId})
+              }>
               <Icon name="plus-circle" size={15} color="black" />
             </S.IconWrapper>
           </S.SectionHeader>
@@ -128,7 +164,7 @@ export function Travel() {
             renderItem={({item}) => (
               <S.ListItemContainer style={{alignItems: 'center'}}>
                 <S.ListItemImage
-                  source={{uri: item.image}}
+                  source={{uri: item.uri}}
                   width={125}
                   height={125}
                   borderRadius={99}
@@ -142,7 +178,10 @@ export function Travel() {
         <S.Section>
           <S.SectionHeader>
             Lugares:
-            <S.IconWrapper onPress={() => navigation.navigate('AddPlace')}>
+            <S.IconWrapper
+              onPress={() =>
+                navigation.navigate('AddPlace', {travelId: travelId})
+              }>
               <Icon name="plus-circle" size={15} color="black" />
             </S.IconWrapper>
           </S.SectionHeader>
@@ -155,10 +194,10 @@ export function Travel() {
             data={placeData}
             renderItem={({item}) => (
               <S.ListItemContainer>
-                <S.SectionHeader>{item.title}</S.SectionHeader>
-                <S.ListItemImage source={{uri: item.image}} />
+                <S.SectionHeader>{item.name}</S.SectionHeader>
+                <S.ListItemImage source={{uri: item.uri}} />
                 <S.SectionHeader>Data: {item.date}</S.SectionHeader>
-                <S.SectionHeader>Gasto: {item.spent}</S.SectionHeader>
+                <S.SectionHeader>Gasto: {item.type}</S.SectionHeader>
               </S.ListItemContainer>
             )}
           />
