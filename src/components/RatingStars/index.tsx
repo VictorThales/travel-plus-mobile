@@ -13,11 +13,12 @@ const RatingStars = ({maxStars = 5, onRatingChange}) => {
   };
 
   return (
-    <S.Container>
+    <S.Container testID="rating-stars-container">
       {[...Array(maxStars)].map((_, index) => {
         const starNumber = index + 1;
         return (
           <S.StarButton
+            testID={`star-button-${starNumber}`}
             key={starNumber}
             onPress={() => handleStarPress(starNumber)}>
             <Icon
