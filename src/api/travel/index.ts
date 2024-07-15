@@ -1,10 +1,10 @@
-import {api} from '..';
+import { api } from '..';
 
 export interface ICreateTravel {
   name: string;
   description: string;
   budget: number;
-  user: number;
+  userId: number;
   date?: string;
 }
 
@@ -18,13 +18,13 @@ export interface ITravel {
 }
 
 export const createTravel = async (
-  body: ICreateTravel,
+  body: ICreateTravel
 ): Promise<ICreateTravel> => {
   const response = await api.post(`/trips`, {
     name: body.name,
     description: body.description,
     budget: body.budget,
-    userId: body.user,
+    userId: body.userId,
   });
 
   return response.data;

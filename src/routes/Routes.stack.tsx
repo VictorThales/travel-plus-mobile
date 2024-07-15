@@ -1,26 +1,27 @@
+import React from 'react';
 import {
   StackNavigationOptions,
   createStackNavigator,
 } from '@react-navigation/stack';
-import {PersonalData} from '../features/profile/screens/PersonalData/PersolnalData';
-import {TabNavigator} from './TabNavigator';
-import {View} from 'react-native';
-import {Travel} from '../features/travels/screens/travel';
-import {AddDestination} from '../features/travels/screens/destination/addDestination';
-import {AddCompanion} from '../features/travels/screens/companion/addCompanion';
-import {AddPlace} from '../features/travels/screens/place/addPlace';
-import {AddTravel} from '../features/travels/screens/travel/addTravel';
-import {Statistics} from '../features/profile/screens/Statistics';
-import {Register} from '../features/profile/screens/Register';
-import {UpdatePassword} from '../features/profile/screens/UpdatePassword';
-import {ForgetPassword} from '../features/profile/screens/ForgetPassword';
-import {Login} from '../features/profile/screens/Login';
+import { PersonalData } from '../features/profile/screens/PersonalData/PersolnalData';
+import { TabNavigator } from './TabNavigator';
+import { View } from 'react-native';
+import { Travel } from '../features/travels/screens/travel';
+import { AddDestination } from '../features/travels/screens/destination/addDestination';
+import { AddCompanion } from '../features/travels/screens/companion/addCompanion';
+import { AddPlace } from '../features/travels/screens/place/addPlace';
+import { AddTravel } from '../features/travels/screens/travel/addTravel';
+import { Statistics } from '../features/profile/screens/Statistics';
+import { Register } from '../features/profile/screens/Register';
+import { UpdatePassword } from '../features/profile/screens/UpdatePassword';
+import { ForgetPassword } from '../features/profile/screens/ForgetPassword';
+import { Login } from '../features/profile/screens/Login';
 
 const Stack = createStackNavigator();
 
 export function RoutesStack() {
   const headerStyle: StackNavigationOptions = {
-    headerTitleStyle: {fontSize: 25, fontWeight: 'bold'},
+    headerTitleStyle: { fontSize: 25, fontWeight: 'bold' },
     headerTitleAlign: 'center',
     headerTintColor: '#556B2F',
     headerBackground: () => (
@@ -30,7 +31,8 @@ export function RoutesStack() {
           borderStyle: 'solid',
           borderBottomWidth: 0.5,
           borderColor: '#00000050',
-        }}></View>
+        }}
+      ></View>
     ),
   };
 

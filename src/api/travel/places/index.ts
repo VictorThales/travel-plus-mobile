@@ -1,4 +1,4 @@
-import {api} from '../../';
+import { api } from '../../';
 
 export interface ICreatePlace {
   name: string;
@@ -22,7 +22,7 @@ export interface IPlace {
 }
 
 export const createPlace = async (body: ICreatePlace): Promise<IPlace> => {
-  console.log({body});
+  console.log({ body });
   const response = await api.post<IPlace>('/places', {
     name: body.name,
     date: body.date,

@@ -1,24 +1,24 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Profile} from '../features/profile/screens/Profile';
-import {Travels} from '../features/travels/screens/travelList/';
-import {AddTravel} from '../features/travels/screens/travel/addTravel';
-import {Login} from '../features/profile/screens/Login';
-import {useAuthStore} from '../stores/useAuthStore';
+import { Profile } from '../features/profile/screens/Profile';
+import { Travels } from '../features/travels/screens/travelList/';
+import { AddTravel } from '../features/travels/screens/travel/addTravel';
+import { Login } from '../features/profile/screens/Login';
+import { useAuthStore } from '../stores/useAuthStore';
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const user = useAuthStore(state => state.user);
+  const user = useAuthStore((state) => state.user);
 
   const headerStyle: BottomTabNavigationOptions = {
     headerTitle: 'Viagem+',
-    headerTitleStyle: {fontSize: 25, fontWeight: 'bold'},
+    headerTitleStyle: { fontSize: 25, fontWeight: 'bold' },
     headerTitleAlign: 'center',
     headerTintColor: '#556B2F',
     headerBackground: () => (
@@ -28,7 +28,8 @@ export const TabNavigator = () => {
           borderStyle: 'solid',
           borderBottomWidth: 0.5,
           borderColor: '#00000050',
-        }}></View>
+        }}
+      ></View>
     ),
   };
 
@@ -37,14 +38,15 @@ export const TabNavigator = () => {
       initialRouteName="Initial"
       screenOptions={{
         tabBarActiveTintColor: 'black',
-      }}>
+      }}
+    >
       <Tab.Screen
         name="Initial"
         component={Travels}
         options={{
           ...headerStyle,
           tabBarLabel: 'Viagens',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="location-arrow"
               size={30}
@@ -59,7 +61,7 @@ export const TabNavigator = () => {
         options={{
           ...headerStyle,
           tabBarLabel: 'Add',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               name="plus-circle"
               size={40}
@@ -75,7 +77,7 @@ export const TabNavigator = () => {
         options={{
           ...headerStyle,
           tabBarLabel: 'Perfil',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Icon name="user" size={30} color={focused ? 'black' : 'gray'} />
           ),
         }}

@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import * as S from './index.styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const RatingStars = ({maxStars = 5, onRatingChange}) => {
+interface RatingStarsProps {
+  maxStars?: number;
+  onRatingChange?: (rating: number) => void;
+}
+
+const RatingStars: React.FC<RatingStarsProps> = ({
+  maxStars = 5,
+  onRatingChange,
+}) => {
   const [rating, setRating] = useState(0);
 
-  const handleStarPress = star => {
+  const handleStarPress = (star: number) => {
     setRating(star);
     if (onRatingChange) {
       onRatingChange(star);
@@ -20,7 +28,8 @@ const RatingStars = ({maxStars = 5, onRatingChange}) => {
           <S.StarButton
             testID={`star-button-${starNumber}`}
             key={starNumber}
-            onPress={() => handleStarPress(starNumber)}>
+            onPress={() => handleStarPress(starNumber)}
+          >
             <Icon
               name={starNumber <= rating ? 'star' : 'star-o'}
               size={32}

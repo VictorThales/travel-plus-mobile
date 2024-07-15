@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["esnext","DOM", "es2017", "ES2021.String"],
+    "lib": ["esnext", "DOM", "es2017", "ES2021.String"],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -22,6 +22,6 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "esnext",
+    "target": "esnext"
   }
 }

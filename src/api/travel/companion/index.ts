@@ -1,4 +1,4 @@
-import {api} from '../../';
+import { api } from '../../';
 
 export interface ICompanion {
   name: string;
@@ -8,7 +8,7 @@ export interface ICompanion {
 }
 
 export const createCompanion = async (
-  body: ICompanion,
+  body: ICompanion
 ): Promise<ICompanion> => {
   const response = await api.post<ICompanion>('/companions', {
     name: body.name,
@@ -27,7 +27,7 @@ export const getCompanions = async (userId: number): Promise<ICompanion[]> => {
 };
 
 export const getCompanionsByTripId = async (
-  tripId: number,
+  tripId: number
 ): Promise<ICompanion[]> => {
   const response = await api.get(`/companions/trip/${tripId}`);
 

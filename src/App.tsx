@@ -6,8 +6,8 @@
  */
 
 import React from 'react';
-import {NavigationComponent} from './routes/NavigationComponent';
-import {AuthProvider} from './context/authContext';
+import { NavigationComponent } from './routes/NavigationComponent';
+import { AuthProvider } from './context/authContext';
 
 function App() {
   return (

@@ -1,28 +1,30 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as S from './index.styles';
-import {useNavigation} from '@react-navigation/native';
-import {Swipeable} from 'react-native-gesture-handler';
-import {ActivityIndicator, Alert} from 'react-native';
-import {useAuthStore} from '../../../../stores/useAuthStore';
-import {ITravel, deleteTravel, getTravels} from '../../../../api/travel';
-import {useFocusEffect} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { Swipeable } from 'react-native-gesture-handler';
+import { ActivityIndicator, Alert } from 'react-native';
+import { useAuthStore } from '../../../../stores/useAuthStore';
+import { ITravel, deleteTravel, getTravels } from '../../../../api/travel';
+import { useFocusEffect } from '@react-navigation/native';
 
 export function Travels() {
   const navigation = useNavigation();
   const [list, setList] = useState<ITravel[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const swipeableRef = useRef(null);
-  const user = useAuthStore(state => state.user);
+  const user = useAuthStore((state) => state.user);
 
   const LinkContent = () => {
     return list.map((item, index) => (
       <Swipeable
         key={index}
         renderRightActions={() => renderRightActions(item.id)}
-        ref={swipeableRef}>
+        ref={swipeableRef}
+      >
         <S.NavigationWrapper
-          onPress={() => navigation.navigate('Travel', {travelId: item.id})}>
+          onPress={() => navigation.navigate('Travel', { travelId: item.id })}
+        >
           <S.ProfileLinks key={index}>
             <S.TextInfosWrapper>
               <S.TextInfos>{item.name}</S.TextInfos>
@@ -42,20 +44,20 @@ export function Travels() {
       const getListTravels = async () => {
         if (user?.id) {
           const travels = await getTravels(user?.id);
-          console.log({travels});
+          console.log({ travels });
           setList(travels);
         }
       };
       getListTravels();
-    }, [user]),
+    }, [user])
   );
 
   useEffect(() => {
-    console.log({useEffect: user});
+    console.log({ useEffect: user });
     const getListTravels = async () => {
       if (user?.id) {
         await getTravels(user?.id)
-          .then(travels => {
+          .then((travels) => {
             setList(travels);
             setLoading(false);
           })
@@ -69,8 +71,8 @@ export function Travels() {
 
   const onDeleteTravel = async (id: number) => {
     await deleteTravel(id)
-      .then(() => setList(list.filter(item => item.id !== id)))
-      .catch(err => console.warn('Erro ao deletar a viagem', err));
+      .then(() => setList(list.filter((item) => item.id !== id)))
+      .catch((err) => console.warn('Erro ao deletar a viagem', err));
   };
 
   const renderRightActions = (id: number) => (
@@ -85,7 +87,8 @@ export function Travels() {
             onPress: () => onDeleteTravel(id),
           },
         ])
-      }>
+      }
+    >
       <S.DeleteButtonText>Delete</S.DeleteButtonText>
     </S.DeleteButton>
   );

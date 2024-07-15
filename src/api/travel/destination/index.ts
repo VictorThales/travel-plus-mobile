@@ -1,4 +1,4 @@
-import {api} from '../../';
+import { api } from '../../';
 
 export interface ICreateDestination {
   name: string;
@@ -20,9 +20,9 @@ export interface IDestination {
 }
 
 export const createDestination = async (
-  body: ICreateDestination,
+  body: ICreateDestination
 ): Promise<IDestination> => {
-  console.log({body});
+  console.log({ body });
   const response = await api.post<IDestination>('/destinations', {
     name: body.name,
     date: body.date.toISOString(),
@@ -36,7 +36,7 @@ export const createDestination = async (
 };
 
 export const getDestinations = async (
-  userId: number,
+  userId: number
 ): Promise<IDestination[]> => {
   const response = await api.get(`/destinations/user/${userId}`);
 
@@ -44,7 +44,7 @@ export const getDestinations = async (
 };
 
 export const getDestinationsByTripId = async (
-  tripId: number,
+  tripId: number
 ): Promise<IDestination[]> => {
   const response = await api.get(`/destinations/trip/${tripId}`);
 

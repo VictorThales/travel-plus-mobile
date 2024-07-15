@@ -1,17 +1,17 @@
 import * as React from 'react';
 import * as S from './index.styles';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import {
   createDestination,
   ICreateDestination,
 } from '../../../../../api/travel/destination';
-import {uploadImage, IImage} from '../../../../../api/image';
-import {useRoute} from '@react-navigation/native';
+import { uploadImage } from '../../../../../api/image';
+import { useRoute } from '@react-navigation/native';
 
 export function AddDestination() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
-  const {travelId} = route.params as any;
+  const { travelId } = route.params as any;
   const [destination, setDestination] = React.useState<ICreateDestination>({
     name: '',
     date: new Date(),
@@ -29,13 +29,13 @@ export function AddDestination() {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
       } else {
-        console.log({response: response.assets?.[0]});
+        console.log({ response: response.assets?.[0] });
         setSelectedImage(response.assets?.[0] as any);
       }
     });
@@ -46,7 +46,7 @@ export function AddDestination() {
       const uploadedImage = await uploadImage(imageSelected);
       console.log('Image uploaded:', uploadedImage);
 
-      setDestination({...destination, imageId: uploadedImage.id});
+      setDestination({ ...destination, imageId: uploadedImage.id });
 
       const newDestination = await createDestination({
         ...destination,
@@ -75,7 +75,9 @@ export function AddDestination() {
         <S.StyledTextInput
           placeholder="Título"
           value={destination.name}
-          onChangeText={text => setDestination({...destination, name: text})}
+          onChangeText={(text) =>
+            setDestination({ ...destination, name: text })
+          }
         />
       </S.Section>
       <S.Section>
@@ -83,8 +85,8 @@ export function AddDestination() {
         <S.StyledTextInput
           placeholder="Data"
           value={destination.date.toString()}
-          onChangeText={text =>
-            setDestination({...destination, date: new Date(text)})
+          onChangeText={(text) =>
+            setDestination({ ...destination, date: new Date(text) })
           }
         />
       </S.Section>
@@ -93,8 +95,8 @@ export function AddDestination() {
         <S.StyledTextInput
           placeholder="Gasto Estimado"
           value={destination.estimatedCost.toString()}
-          onChangeText={text =>
-            setDestination({...destination, estimatedCost: parseInt(text)})
+          onChangeText={(text) =>
+            setDestination({ ...destination, estimatedCost: parseInt(text) })
           }
         />
       </S.Section>
@@ -107,7 +109,7 @@ export function AddDestination() {
                 ? {
                     uri: 'https://as1.ftcdn.net/v2/jpg/01/80/31/10/1000_F_180311099_Vlj8ufdHvec4onKSDLxxdrNiP6yX4PnP.jpg',
                   }
-                : {uri: imageSelected.uri}
+                : { uri: imageSelected.uri }
             }
           />
         </S.ImageButton>

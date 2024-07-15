@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import * as S from './index.styles';
-import {useNavigation} from '@react-navigation/native';
-import {IUser, createUser} from '../../../../api/auth';
-import {AuthContext} from '../../../../context/authContext';
+import { useNavigation } from '@react-navigation/native';
+import { IUser } from '../../../../api/auth';
+import { AuthContext } from '../../../../context/authContext';
 
 export function Register() {
-  const {navigate} = useNavigation();
-  const {register} = React.useContext(AuthContext);
+  const { navigate } = useNavigation();
+  const { register } = React.useContext(AuthContext);
   const [account, setAccount] = React.useState<IUser>({
     age: 0,
     city: '',
@@ -32,35 +32,35 @@ export function Register() {
         <S.Label>Nome:</S.Label>
         <S.StyledTextInput
           placeholder="Nome"
-          onChangeText={text => setAccount({...account, name: text})}
+          onChangeText={(text) => setAccount({ ...account, name: text })}
         />
       </S.Section>
       <S.Section>
         <S.Label>Idade:</S.Label>
         <S.StyledTextInput
           placeholder="Idade"
-          onChangeText={text => setAccount({...account, age: Number(text)})}
+          onChangeText={(text) => setAccount({ ...account, age: Number(text) })}
         />
       </S.Section>
       <S.Section>
         <S.Label>Cidade / Estado:</S.Label>
         <S.StyledTextInput
           placeholder="Cidade / Estado"
-          onChangeText={text => setAccount({...account, city: text})}
+          onChangeText={(text) => setAccount({ ...account, city: text })}
         />
       </S.Section>
       <S.Section>
         <S.Label>País:</S.Label>
         <S.StyledTextInput
           placeholder="País"
-          onChangeText={text => setAccount({...account, country: text})}
+          onChangeText={(text) => setAccount({ ...account, country: text })}
         />
       </S.Section>
       <S.Section>
         <S.Label>Email:</S.Label>
         <S.StyledTextInput
           placeholder="Email"
-          onChangeText={text => setAccount({...account, email: text})}
+          onChangeText={(text) => setAccount({ ...account, email: text })}
         />
       </S.Section>
       <S.Section>
@@ -68,7 +68,7 @@ export function Register() {
         <S.StyledTextInput
           secureTextEntry={true}
           placeholder="Senha"
-          onChangeText={text => setAccount({...account, password: text})}
+          onChangeText={(text) => setAccount({ ...account, password: text })}
         />
       </S.Section>
 
@@ -86,7 +86,8 @@ export function Register() {
           <S.Label
             style={{
               textAlign: 'center',
-            }}>
+            }}
+          >
             Clicando em registrar você está concordando com os Termos de Uso e
             Política de Privacidade
           </S.Label>

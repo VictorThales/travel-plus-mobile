@@ -1,19 +1,19 @@
 import * as React from 'react';
 
 import * as S from './index.styles';
-import {ScrollView, Text} from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../../../../context/authContext';
-import {useAuthStore} from '../../../../stores/useAuthStore';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../../../context/authContext';
+import { useAuthStore } from '../../../../stores/useAuthStore';
 
 export function Profile() {
   const [imageSelected, setSelectedImage] = React.useState('');
   const navigation = useNavigation();
-  const {logout} = React.useContext(AuthContext);
-  const user = useAuthStore(state => state.user);
-  const [userInfo, setUserInfo] = React.useState(user);
+  const { logout } = React.useContext(AuthContext);
+  const user = useAuthStore((state) => state.user);
+  const [userInfo] = React.useState(user);
 
   const openImagePicker = () => {
     const options = {
@@ -23,13 +23,13 @@ export function Profile() {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
       } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
+        const imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
       }
     });
@@ -46,12 +46,12 @@ export function Profile() {
                   ? {
                       uri: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                     }
-                  : {uri: imageSelected}
+                  : { uri: imageSelected }
               }
             />
           </S.ImageButton>
 
-          <Text onPress={() => openImagePicker()} style={{marginTop: 10}}>
+          <Text onPress={() => openImagePicker()} style={{ marginTop: 10 }}>
             Alterar imagem
           </Text>
         </S.CenteredView>

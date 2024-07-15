@@ -1,12 +1,12 @@
-import {api} from '..';
+import { api } from '..';
 
 interface LoginResponse {
   id: number;
   name: string;
   email: string;
   country: string;
-  city: String;
-  password: String;
+  city: string;
+  password: string;
 }
 
 export interface IUserResponse {
@@ -29,7 +29,7 @@ export interface IUser {
 
 export const login = async (
   email: string,
-  password: string,
+  password: string
 ): Promise<LoginResponse> => {
   const response = await api.post(`/users/login`, {
     email: email.toLowerCase(),

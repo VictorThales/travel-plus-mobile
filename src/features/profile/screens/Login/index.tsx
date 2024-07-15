@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import * as S from './index.styles';
-import {useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../../../../context/authContext';
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../../../context/authContext';
 
 export function Login() {
-  const {login} = React.useContext(AuthContext);
+  const { login } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -26,14 +26,14 @@ export function Login() {
       <S.Section>
         <S.Label>Email:</S.Label>
         <S.StyledTextInput
-          onChangeText={text => onChangeEmail(text)}
+          onChangeText={(text) => onChangeEmail(text)}
           placeholder="Email"
         />
       </S.Section>
       <S.Section>
         <S.Label>Senha:</S.Label>
         <S.StyledTextInput
-          onChangeText={text => onChangePassword(text)}
+          onChangeText={(text) => onChangePassword(text)}
           secureTextEntry={true}
           placeholder="Senha"
         />

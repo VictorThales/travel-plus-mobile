@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 interface User {
   id: number;
@@ -6,7 +6,7 @@ interface User {
   email: string;
   country: string;
   city: string;
-  password: String;
+  password: string;
 }
 
 type IAuthState = {
@@ -23,10 +23,10 @@ export const initialState: IAuthState = {
   user: null,
 };
 
-export const useAuthStore = create<AuthStore>()(set => ({
+export const useAuthStore = create<AuthStore>()((set) => ({
   ...initialState,
-  logout: () => set({user: null}),
-  setUser: (user: User | null) => set({user}),
+  logout: () => set({ user: null }),
+  setUser: (user: User | null) => set({ user }),
 }));
 
 export const logoutUser = useAuthStore.getState().logout;

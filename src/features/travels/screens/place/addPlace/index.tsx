@@ -1,16 +1,16 @@
 import * as React from 'react';
 import * as S from './index.styles';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {useRoute} from '@react-navigation/native';
-import {ICreatePlace, createPlace} from '../../../../../api/travel/places';
-import {uploadImage} from '../../../../../api/image';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { useRoute } from '@react-navigation/native';
+import { ICreatePlace, createPlace } from '../../../../../api/travel/places';
+import { uploadImage } from '../../../../../api/image';
 import RatingStars from '../../../../../components/RatingStars';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 export function AddPlace() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
-  const {travelId} = route.params as any;
+  const { travelId } = route.params as any;
   const [place, setPlace] = React.useState<ICreatePlace>({
     name: '',
     date: new Date(),
@@ -29,13 +29,13 @@ export function AddPlace() {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
       } else {
-        let imageUri = response.assets?.[0] as any;
+        const imageUri = response.assets?.[0] as any;
         setSelectedImage(imageUri);
       }
     });
@@ -72,7 +72,7 @@ export function AddPlace() {
         <S.StyledTextInput
           placeholder="Nome"
           value={place.name}
-          onChangeText={text => setPlace({...place, name: text})}
+          onChangeText={(text) => setPlace({ ...place, name: text })}
         />
       </S.Section>
       <S.Section>
@@ -80,7 +80,7 @@ export function AddPlace() {
         <S.StyledTextInput
           placeholder="Data"
           value={String(place.date)}
-          onChangeText={text => setPlace({...place, date: new Date(text)})}
+          onChangeText={(text) => setPlace({ ...place, date: new Date(text) })}
         />
       </S.Section>
       <S.Section>
@@ -88,7 +88,7 @@ export function AddPlace() {
         <S.StyledTextInput
           placeholder="Valor Gasto"
           value={String(place.spent)}
-          onChangeText={text => setPlace({...place, spent: Number(text)})}
+          onChangeText={(text) => setPlace({ ...place, spent: Number(text) })}
         />
       </S.Section>
       <S.Section>
@@ -96,7 +96,7 @@ export function AddPlace() {
         <S.StyledTextInput
           placeholder="Tipo"
           value={place.type}
-          onChangeText={text => setPlace({...place, type: text})}
+          onChangeText={(text) => setPlace({ ...place, type: text })}
         />
       </S.Section>
       <S.Section>
@@ -108,7 +108,7 @@ export function AddPlace() {
                 ? {
                     uri: 'https://as1.ftcdn.net/v2/jpg/01/80/31/10/1000_F_180311099_Vlj8ufdHvec4onKSDLxxdrNiP6yX4PnP.jpg',
                   }
-                : {uri: imageSelected.uri}
+                : { uri: imageSelected.uri }
             }
           />
         </S.ImageButton>

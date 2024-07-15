@@ -1,6 +1,6 @@
-import React, {createContext, useState, useEffect, ReactNode} from 'react';
-import {IUser, login as apiLogin, createUser} from '../api/auth';
-import {logoutUser, setUser} from '../stores/useAuthStore';
+import React, { createContext, useEffect, ReactNode } from 'react';
+import { IUser, login as apiLogin, createUser } from '../api/auth';
+import { logoutUser, setUser } from '../stores/useAuthStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthContextProps {
@@ -19,11 +19,11 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider = ({children}: AuthProviderProps) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUser = async () => {
       const storedUser = await AsyncStorage.getItem('user');
-      console.log({storedUser: storedUser});
+      console.log({ storedUser: storedUser });
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       }
@@ -38,7 +38,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   };
 
   const register = async (body: IUser) => {
-    await createUser(body).then(async data => {
+    await createUser(body).then(async (data) => {
       await login(data.email, body.password);
     });
   };
@@ -49,7 +49,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{login, logout, register}}>
+    <AuthContext.Provider value={{ login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

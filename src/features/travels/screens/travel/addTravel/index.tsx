@@ -1,18 +1,19 @@
 import * as React from 'react';
 
 import * as S from './index.styles';
-import {useAuthStore} from '../../../../../stores/useAuthStore';
-import {ICreateTravel, createTravel} from '../../../../../api/travel';
-import {useNavigation} from '@react-navigation/native';
+import { useAuthStore } from '../../../../../stores/useAuthStore';
+import { ICreateTravel, createTravel } from '../../../../../api/travel';
+import { useNavigation } from '@react-navigation/native';
 
 export function AddTravel() {
-  const user = useAuthStore(state => state.user);
+  const user = useAuthStore((state) => state.user);
   const navigation = useNavigation();
+  console.log({ user });
   const [travel, setTravel] = React.useState<ICreateTravel>({
     name: '',
     description: '',
     budget: 0,
-    user: user ? user?.id : 0,
+    userId: user ? user?.id : 0,
   });
 
   const onSave = () => {
@@ -28,14 +29,16 @@ export function AddTravel() {
             <S.Label>Título:</S.Label>
             <S.StyledTextInput
               placeholder="Título"
-              onChangeText={text => setTravel({...travel, name: text})}
+              onChangeText={(text) => setTravel({ ...travel, name: text })}
             />
           </S.Section>
           <S.Section>
             <S.Label>Descrição:</S.Label>
             <S.StyledTextInput
               placeholder="Descrição"
-              onChangeText={text => setTravel({...travel, description: text})}
+              onChangeText={(text) =>
+                setTravel({ ...travel, description: text })
+              }
             />
           </S.Section>
           <S.Section>
@@ -43,8 +46,8 @@ export function AddTravel() {
             <S.StyledTextInput
               keyboardType="number-pad"
               placeholder="Orçamento"
-              onChangeText={text =>
-                setTravel({...travel, budget: Number(text)})
+              onChangeText={(text) =>
+                setTravel({ ...travel, budget: Number(text) })
               }
             />
           </S.Section>

@@ -1,19 +1,19 @@
-import {Text, View, TouchableOpacity} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Wrapper = styled(View)<{paddingTop?: number}>`
+export const Wrapper = styled(View)<{ paddingTop?: number }>`
   flex: 1;
-  padding-top: ${({paddingTop}) => (paddingTop ? paddingTop : 0)}px;
+  padding-top: ${({ paddingTop }) => (paddingTop ? paddingTop : 0)}px;
   padding-left: 20px;
   padding-right: 20px;
 `;
 
-export const ProfileInfo = styled(View)<{paddingTop?: number}>`
+export const ProfileInfo = styled(View)<{ paddingTop?: number }>`
   display: flex;
   height: 80px;
   background-color: white;
   border-radius: 10px;
-  padding-top: ${({paddingTop}) => (paddingTop ? paddingTop : 0)}px;
+  padding-top: ${({ paddingTop }) => (paddingTop ? paddingTop : 0)}px;
   padding: 10px;
   shadow-color: #0003;
   shadow-opacity: 0.5;
@@ -22,29 +22,29 @@ export const ProfileInfo = styled(View)<{paddingTop?: number}>`
   shadow-offset: 2px 2px;
 `;
 
-export const ProfileLinksWrapper = styled(View)<{paddingTop?: number}>`
+export const ProfileLinksWrapper = styled(View)<{ paddingTop?: number }>`
   display: flex;
   margin-top: 50px;
 `;
-export const CancelText = styled(Text)<{color?: string}>`
+export const CancelText = styled(Text)<{ color?: string }>`
   font-size: 16px;
-  color: ${({color}) => (color ? color : 'black')};
+  color: ${({ color }) => (color ? color : 'black')};
 `;
 export const InfosWrapper = styled(View)`
   flex: 1;
 `;
-export const InfosText = styled(Text)<{color?: string}>`
+export const InfosText = styled(Text)<{ color?: string }>`
   margin-top: 5px;
   padding: 0px;
 `;
 export const Link = styled(TouchableOpacity)``;
 
-export const CancelWrapper = styled(View)<{paddingTop?: number}>`
+export const CancelWrapper = styled(View)<{ paddingTop?: number }>`
   flex-direction: row;
   margin-top: 50px;
 `;
 
-export const ProfileLinks = styled(View)<{paddingTop?: number}>`
+export const ProfileLinks = styled(View)<{ paddingTop?: number }>`
   display: flex;
   flex-direction: row;
   height: 80px;

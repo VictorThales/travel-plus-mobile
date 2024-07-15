@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 
-export const Wrapper = styled(View)<{paddingTop?: number}>`
+export const Wrapper = styled(View)<{ paddingTop?: number }>`
   flex: 1;
-  padding-top: ${({paddingTop}) => (paddingTop ? paddingTop : 0)}px;
+  padding-top: ${({ paddingTop }) => (paddingTop ? paddingTop : 0)}px;
   padding-left: 20px;
   padding-right: 20px;
 `;
@@ -27,9 +27,9 @@ export const ListItemContainer = styled(View)`
 `;
 
 export const ListItemImage = styled(Image)`
-  width: ${props => props.width || 140}px;
-  height: ${props => props.height || 169}px;
-  border-radius: ${props => props.borderRadius || 10}px;
+  width: ${(props) => props.width || 140}px;
+  height: ${(props) => props.height || 169}px;
+  border-radius: ${(props) => props.borderRadius || 10}px;
 `;
 
 export const InputContainer = styled(View)`

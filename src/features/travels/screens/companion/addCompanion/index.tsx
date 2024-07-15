@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as S from './index.styles';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {ICompanion, createCompanion} from '../../../../../api/travel/companion';
-import {uploadImage} from '../../../../../api/image';
-import {useRoute} from '@react-navigation/native';
+import { launchImageLibrary } from 'react-native-image-picker';
+import {
+  ICompanion,
+  createCompanion,
+} from '../../../../../api/travel/companion';
+import { uploadImage } from '../../../../../api/image';
+import { useRoute } from '@react-navigation/native';
 
 export function AddCompanion() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
-  const {travelId} = route.params as any;
+  const { travelId } = route.params as any;
   const [companion, setCompanion] = React.useState<ICompanion>({
     name: '',
     description: '',
@@ -24,7 +27,7 @@ export function AddCompanion() {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -40,7 +43,7 @@ export function AddCompanion() {
       const uploadedImage = await uploadImage(imageSelected);
       console.log('Image uploaded:', uploadedImage);
 
-      setCompanion({...companion, imageId: uploadedImage.id});
+      setCompanion({ ...companion, imageId: uploadedImage.id });
 
       const newCompanion = await createCompanion({
         ...companion,
@@ -67,7 +70,7 @@ export function AddCompanion() {
         <S.StyledTextInput
           placeholder="Nome"
           value={companion.name}
-          onChangeText={text => setCompanion({...companion, name: text})}
+          onChangeText={(text) => setCompanion({ ...companion, name: text })}
         />
       </S.Section>
 
@@ -80,7 +83,7 @@ export function AddCompanion() {
                 ? {
                     uri: 'https://as1.ftcdn.net/v2/jpg/01/80/31/10/1000_F_180311099_Vlj8ufdHvec4onKSDLxxdrNiP6yX4PnP.jpg',
                   }
-                : {uri: imageSelected.uri}
+                : { uri: imageSelected.uri }
             }
           />
         </S.ImageButton>
