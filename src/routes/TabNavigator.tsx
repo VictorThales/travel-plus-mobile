@@ -17,7 +17,7 @@ export const TabNavigator = () => {
   const user = useAuthStore((state) => state.user);
 
   const headerStyle: BottomTabNavigationOptions = {
-    headerTitle: 'Viagem+',
+    headerTitle: 'Trip +',
     headerTitleStyle: { fontSize: 25, fontWeight: 'bold' },
     headerTitleAlign: 'center',
     headerTintColor: '#556B2F',
