@@ -22,7 +22,6 @@ export interface IPlace {
 }
 
 export const createPlace = async (body: ICreatePlace): Promise<IPlace> => {
-  console.log({ body });
   const response = await api.post<IPlace>('/places', {
     name: body.name,
     date: body.date,

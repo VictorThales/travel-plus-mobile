@@ -6,11 +6,14 @@ import {
   ICreateDestination,
 } from '../../../../../api/travel/destination';
 import { uploadImage } from '../../../../../api/image';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { formatCurrency } from '../../../../../utils/currency';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export function AddDestination() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
+  const navigation = useNavigation();
   const { travelId } = route.params as any;
   const [destination, setDestination] = React.useState<ICreateDestination>({
     name: '',
@@ -20,6 +23,12 @@ export function AddDestination() {
     tripId: travelId,
     imageId: 0,
   });
+  const [date, setDate] = React.useState(new Date());
+
+  const onChange = (event, selectDate) => {
+    setDestination({ ...destination, date: selectDate });
+    setDate(selectDate);
+  };
 
   const openImagePicker = () => {
     const options = {
@@ -63,6 +72,7 @@ export function AddDestination() {
         imageId: 0,
       });
       setSelectedImage(null);
+      navigation.goBack();
     } catch (error) {
       console.error('Error creating destination:', error);
     }
@@ -82,21 +92,28 @@ export function AddDestination() {
       </S.Section>
       <S.Section>
         <S.Label>Data:</S.Label>
-        <S.StyledTextInput
-          placeholder="Data"
-          value={destination.date.toString()}
-          onChangeText={(text) =>
-            setDestination({ ...destination, date: new Date(text) })
-          }
-        />
+        <S.Section style={{ alignItems: 'flex-start' }}>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+          />
+        </S.Section>
       </S.Section>
       <S.Section>
         <S.Label>Gasto Estimado:</S.Label>
         <S.StyledTextInput
           placeholder="Gasto Estimado"
-          value={destination.estimatedCost.toString()}
+          value={formatCurrency(destination.estimatedCost.toString())}
           onChangeText={(text) =>
-            setDestination({ ...destination, estimatedCost: parseInt(text) })
+            setDestination({
+              ...destination,
+              estimatedCost:
+                parseFloat(
+                  text.replace('R$ ', '').replace('.', '').replace(',', '.')
+                ) || 0,
+            })
           }
         />
       </S.Section>

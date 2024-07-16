@@ -4,11 +4,12 @@ import * as S from './index.styles';
 import { useAuthStore } from '../../../../../stores/useAuthStore';
 import { ICreateTravel, createTravel } from '../../../../../api/travel';
 import { useNavigation } from '@react-navigation/native';
+import { formatCurrency } from '../../../../../utils/currency';
 
 export function AddTravel() {
   const user = useAuthStore((state) => state.user);
   const navigation = useNavigation();
-  console.log({ user });
+
   const [travel, setTravel] = React.useState<ICreateTravel>({
     name: '',
     description: '',
@@ -19,6 +20,12 @@ export function AddTravel() {
   const onSave = () => {
     createTravel(travel);
     navigation.navigate('Initial');
+    setTravel({
+      name: '',
+      description: '',
+      budget: 0,
+      userId: user ? user?.id : 0,
+    });
   };
 
   return (
@@ -30,6 +37,7 @@ export function AddTravel() {
             <S.StyledTextInput
               placeholder="Título"
               onChangeText={(text) => setTravel({ ...travel, name: text })}
+              value={travel.name}
             />
           </S.Section>
           <S.Section>
@@ -39,16 +47,23 @@ export function AddTravel() {
               onChangeText={(text) =>
                 setTravel({ ...travel, description: text })
               }
+              value={travel.description}
             />
           </S.Section>
           <S.Section>
             <S.Label>Orçamento:</S.Label>
             <S.StyledTextInput
-              keyboardType="number-pad"
               placeholder="Orçamento"
               onChangeText={(text) =>
-                setTravel({ ...travel, budget: Number(text) })
+                setTravel({
+                  ...travel,
+                  budget:
+                    parseFloat(
+                      text.replace('R$ ', '').replace('.', '').replace(',', '.')
+                    ) || 0,
+                })
               }
+              value={formatCurrency(travel.budget.toString())}
             />
           </S.Section>
 

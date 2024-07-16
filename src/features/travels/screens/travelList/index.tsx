@@ -23,7 +23,12 @@ export function Travels() {
         ref={swipeableRef}
       >
         <S.NavigationWrapper
-          onPress={() => navigation.navigate('Travel', { travelId: item.id })}
+          onPress={() =>
+            navigation.navigate('Travel', {
+              travelId: item.id,
+              travelInfo: item,
+            })
+          }
         >
           <S.ProfileLinks key={index}>
             <S.TextInfosWrapper>
@@ -44,7 +49,7 @@ export function Travels() {
       const getListTravels = async () => {
         if (user?.id) {
           const travels = await getTravels(user?.id);
-          console.log({ travels });
+
           setList(travels);
         }
       };
@@ -53,7 +58,6 @@ export function Travels() {
   );
 
   useEffect(() => {
-    console.log({ useEffect: user });
     const getListTravels = async () => {
       if (user?.id) {
         await getTravels(user?.id)

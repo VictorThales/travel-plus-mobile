@@ -6,11 +6,12 @@ import {
   createCompanion,
 } from '../../../../../api/travel/companion';
 import { uploadImage } from '../../../../../api/image';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export function AddCompanion() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
+  const navigation = useNavigation();
   const { travelId } = route.params as any;
   const [companion, setCompanion] = React.useState<ICompanion>({
     name: '',
@@ -58,6 +59,7 @@ export function AddCompanion() {
         imageId: 0,
       });
       setSelectedImage(null);
+      navigation.goBack();
     } catch (error) {
       console.error('Error creating companion:', error);
     }

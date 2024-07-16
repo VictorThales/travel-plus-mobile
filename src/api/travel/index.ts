@@ -36,8 +36,20 @@ export const getTravels = async (userId: number): Promise<ITravel[]> => {
   return response.data;
 };
 
+export const getTravelsUserCount = async (userId: number): Promise<number> => {
+  const response = await api.get(`/trips/count/${userId}`);
+
+  return response.data;
+};
+
 export const deleteTravel = async (id: number): Promise<ITravel[]> => {
   const response = await api.delete(`/trips/${id}`);
+
+  return response.data;
+};
+
+export const getTravelstotalSpent = async (userId: number): Promise<number> => {
+  const response = await api.get(`/trips/total-spent/${userId}`);
 
   return response.data;
 };

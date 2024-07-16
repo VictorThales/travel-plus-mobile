@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as S from './index.styles';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ICreatePlace, createPlace } from '../../../../../api/travel/places';
 import { uploadImage } from '../../../../../api/image';
 import RatingStars from '../../../../../components/RatingStars';
-import { Alert } from 'react-native';
+import { formatCurrency } from '../../../../../utils/currency';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export function AddPlace() {
   const [imageSelected, setSelectedImage] = React.useState(null);
   const route = useRoute();
+  const navigation = useNavigation();
   const { travelId } = route.params as any;
   const [place, setPlace] = React.useState<ICreatePlace>({
     name: '',
@@ -20,6 +22,13 @@ export function AddPlace() {
     tripId: travelId,
     imageId: 0,
   });
+  const [date, setDate] = React.useState(new Date());
+  const [rating, setRating] = React.useState(0);
+
+  const onChange = (event, selectDate) => {
+    setPlace({ ...place, date: selectDate });
+    setDate(selectDate);
+  };
 
   const openImagePicker = () => {
     const options = {
@@ -46,13 +55,14 @@ export function AddPlace() {
       const uploadedImage = await uploadImage(imageSelected);
       const newPlace = await createPlace({
         ...place,
+        rating,
         imageId: uploadedImage.id,
       });
       console.log('Place created:', newPlace);
 
       setPlace({
         name: '',
-        date: '',
+        date: null,
         type: '',
         rating: 0,
         tripId: 0,
@@ -60,6 +70,7 @@ export function AddPlace() {
         spent: 0,
       });
       setSelectedImage(null);
+      navigation.goBack();
     } catch (error) {
       console.error('Error creating place:', error);
     }
@@ -77,18 +88,29 @@ export function AddPlace() {
       </S.Section>
       <S.Section>
         <S.Label>Data:</S.Label>
-        <S.StyledTextInput
-          placeholder="Data"
-          value={String(place.date)}
-          onChangeText={(text) => setPlace({ ...place, date: new Date(text) })}
-        />
+        <S.Section style={{ alignItems: 'flex-start' }}>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+          />
+        </S.Section>
       </S.Section>
       <S.Section>
         <S.Label>Valor Gasto:</S.Label>
         <S.StyledTextInput
           placeholder="Valor Gasto"
-          value={String(place.spent)}
-          onChangeText={(text) => setPlace({ ...place, spent: Number(text) })}
+          value={formatCurrency(String(place.spent))}
+          onChangeText={(text) =>
+            setPlace({
+              ...place,
+              spent:
+                parseFloat(
+                  text.replace('R$ ', '').replace('.', '').replace(',', '.')
+                ) || 0,
+            })
+          }
         />
       </S.Section>
       <S.Section>
@@ -117,7 +139,7 @@ export function AddPlace() {
         <S.Label>Avaliação:</S.Label>
         <RatingStars
           maxStars={5}
-          onRatingChange={(item: number) => Alert.alert(String(item))}
+          onRatingChange={(item: number) => setRating(item)}
         />
       </S.Section>
       <S.CenteredView>

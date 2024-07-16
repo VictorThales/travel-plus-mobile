@@ -7,4 +7,5 @@ export const Container = styled.View`
 
 export const StarButton = styled(TouchableOpacity)`
   margin-horizontal: 5px;
+  margin-top: 10px;
 `;

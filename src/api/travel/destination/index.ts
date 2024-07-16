@@ -22,7 +22,6 @@ export interface IDestination {
 export const createDestination = async (
   body: ICreateDestination
 ): Promise<IDestination> => {
-  console.log({ body });
   const response = await api.post<IDestination>('/destinations', {
     name: body.name,
     date: body.date.toISOString(),

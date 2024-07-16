@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUser = async () => {
       const storedUser = await AsyncStorage.getItem('user');
-      console.log({ storedUser: storedUser });
+
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       }

@@ -14,6 +14,8 @@ import {
   getCompanionsByTripId,
 } from '../../../../api/travel/companion';
 import { IPlace, getPlacesByTripId } from '../../../../api/travel/places';
+import { formatCurrency } from '../../../../utils/currency';
+import RatingStars from '../../../../components/RatingStars';
 interface IDestinationWithUri extends IDestination {
   uri?: string;
 }
@@ -33,8 +35,9 @@ export function Travel() {
   const [companionData, setCompanionData] =
     React.useState<ICompanionWithUri[]>();
   const [placeData, setPlaceData] = React.useState<IPlaceWithUri[]>();
-
+  const [note, setNote] = React.useState<string>();
   const { travelId } = route.params as any;
+  const { travelInfo } = route.params as any;
 
   const getDestinations = async () => {
     const data = await getDestinationsByTripId(travelId);
@@ -43,16 +46,16 @@ export function Travel() {
 
     data.map(async (item) => {
       const image = await fetchImage(item.imageId);
-      console.log({ image });
+
       newData.push({ ...item, uri: image ? image : '' });
     });
-    console.log({ newData });
+
     setDestinationData(newData);
   };
 
   const getCompanions = async () => {
     const data = await getCompanionsByTripId(travelId);
-    console.log({ data });
+
     const newData: ICompanionWithUri[] = [];
 
     data.map(async (item) => {
@@ -64,7 +67,7 @@ export function Travel() {
 
   const getPlaces = async () => {
     const data = await getPlacesByTripId(travelId);
-    console.log({ data });
+
     const newData: IPlaceWithUri[] = [];
 
     data.map(async (item) => {
@@ -76,9 +79,8 @@ export function Travel() {
 
   const fetchImage = async (imageId: number) => {
     try {
-      console.log({ imageId });
       const blob = await getImage(imageId);
-      console.log({ blob });
+
       const uri = URL.createObjectURL(blob);
       return uri;
     } catch (error) {
@@ -119,7 +121,9 @@ export function Travel() {
               <Icon name="pencil" size={15} color="black" />
             </S.IconWrapper>
           </S.SectionHeader>
-          <S.SectionHeader>{}</S.SectionHeader>
+          <S.SectionHeader>
+            {formatCurrency(String(travelInfo.budget))}
+          </S.SectionHeader>
         </S.Section>
 
         <S.Section>
@@ -146,7 +150,7 @@ export function Travel() {
                 <S.ListItemImage source={{ uri: item.uri }} />
                 <S.SectionHeader>Data: {formatDate(item.date)}</S.SectionHeader>
                 <S.SectionHeader>
-                  Gasto Est.: {item.estimatedCost}
+                  Gasto Est.: {formatCurrency(String(item.estimatedCost))}
                 </S.SectionHeader>
               </S.ListItemContainer>
             )}
@@ -208,7 +212,10 @@ export function Travel() {
                 <S.SectionHeader>{item.name}</S.SectionHeader>
                 <S.ListItemImage source={{ uri: item.uri }} />
                 <S.SectionHeader>Data: {formatDate(item.date)}</S.SectionHeader>
-                <S.SectionHeader>Gasto: {item.type}</S.SectionHeader>
+                <S.SectionHeader>Tipo: {item.type}</S.SectionHeader>
+                <S.SectionHeader>
+                  Avaliação: <RatingStars ratingValue={item.rating} />
+                </S.SectionHeader>
               </S.ListItemContainer>
             )}
           />
@@ -220,8 +227,8 @@ export function Travel() {
             <S.StyledTextInput
               multiline
               numberOfLines={4}
-              onChangeText={() => null}
-              value="teste"
+              onChangeText={(text) => setNote(text)}
+              value={note}
             />
           </S.InputContainer>
         </S.Section>
